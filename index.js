@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const dotenv = require('dotenv');
+// const mongoose = require('mongoose');
 const { MongoClient } = require('mongodb');
 
 // load environment variables from .env
@@ -20,6 +21,23 @@ app.use(cors({
   origin: "*"
 }));
 
+// const skillSchema = new mongoose.Schema({
+//   _id: String,
+//   Skill: String,
+//   imageUrl: String,
+// });
+
+// const projectSchema = new mongoose.Schema({
+//   _id: String,
+//   imageUrl: String,
+//   Name: String,
+//   Link: String,
+//   README: String,
+// })
+
+// const SkillModel = mongoose.model('skill', skillSchema);
+// const ProjectModel = mongoose.model('project', projectSchema);
+
 // API endpoints
 app.get("/api/skills", async (request, response) => {
   let skills = await getSkills();
@@ -36,11 +54,21 @@ app.listen(port, () => {
 });
 
 // MongoDB functions
-async function  connection() {
+async function connection() {
   await client.connect();
   db = client.db("Portfolio_API");
   return db;
 }
+
+// mongoose.connect(dbUrl, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// }).then(() => {
+//   console.log('Connected to MongoDB');
+// }).catch((error) => {
+//   console.log('Error connecting to MongoDB: ', error);
+// });
+
 // async function to get all skills documents from Skills collection
 async function getSkills() {
   db = await connection();
